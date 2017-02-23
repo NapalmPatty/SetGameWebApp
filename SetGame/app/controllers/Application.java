@@ -8,7 +8,7 @@ import views.html.*;
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(index.render("Pink Bunny Slippers"));
+        return ok(index.render("Pink Bunny Slippers", play.data.Form.form(models.Task.class)));
     }
 
     public static Result addTask() {
