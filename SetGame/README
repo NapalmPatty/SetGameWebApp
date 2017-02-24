@@ -1,4 +1,2 @@
-This is your new Play application
-=================================
-
-This file will be packaged with your application, when using `activator dist`.
+As of 2/24/17, 
+Much of the code in this application was adapted from https://github.com/SocialFinance/play2torial/blob/master/JAVA.md
