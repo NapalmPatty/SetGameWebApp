@@ -12,7 +12,7 @@ public class Application extends Controller {
     }                           //displays the title
 
     public static Result addTask() {
-    	play.data.Form<models.Task> form = play.data.Form.form(models.Task.class).bindFromRequest();   //adds a form to add data
+    	play.data.Form<models.Task> form = play.data.Form.form(models.Task.class).bindFromRequest();   //adds a form to the base page to create data
     	models.Task task = form.get();
     	task.save();                   //Saves the data until SBT shuts down
     	return redirect(routes.Application.index());
