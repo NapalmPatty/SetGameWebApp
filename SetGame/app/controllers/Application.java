@@ -8,18 +8,18 @@ import views.html.*;
 public class Application extends Controller {
 
     public static Result index() {
-        return ok(index.render("Pink Bunny Slippers", play.data.Form.form(models.Task.class)));
-    }
+        return ok(index.render("Pink Bunny Slippers", play.data.Form.form(models.Task.class)));   //takes the GET and POST tasks and puts them on the base page
+    }                           //displays the title
 
     public static Result addTask() {
-    	play.data.Form<models.Task> form = play.data.Form.form(models.Task.class).bindFromRequest();
+    	play.data.Form<models.Task> form = play.data.Form.form(models.Task.class).bindFromRequest();   //adds a form to add data
     	models.Task task = form.get();
-    	task.save();
+    	task.save();                   //Saves the data until SBT shuts down
     	return redirect(routes.Application.index());
     }
     
     public static Result getTasks() {
     	java.util.List<models.Task> tasks = new play.db.ebean.Model.Finder(String.class, models.Task.class).all();
-    	return ok(play.libs.Json.toJson(tasks));
+    	return ok(play.libs.Json.toJson(tasks));   //Returns the data as raw data to be translated by javascript
     }
 }
