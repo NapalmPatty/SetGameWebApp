@@ -1,16 +1,19 @@
 package controllers;
 
 import play.*;
+import play.db.jpa.Transactional;
 import play.mvc.*;
 import models.Task;
 import views.html.*;
 
 public class Application extends Controller {
 
+	@Transactional
     public static Result index() {
         return ok(index.render("Pink Bunny Slippers", play.data.Form.form(models.Task.class)));   //takes the GET and POST tasks and puts them on the base page
     }                           //displays the title
 
+	
     public static Result addTask() {
     	play.data.Form<models.Task> form = play.data.Form.form(models.Task.class).bindFromRequest();   //adds a form to the base page to create data
     	models.Task task = form.get();
