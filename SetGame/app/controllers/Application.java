@@ -10,7 +10,7 @@ public class Application extends Controller {
 
 	@Transactional
     public static Result index() {
-        return ok(index.render("Pink Bunny Slippers", play.data.Form.form(models.Task.class)));   //takes the GET and POST tasks and puts them on the base page
+        return ok(index.render("Pink Bunny Slippers", play.data.Form.form(models.Task.class)));   //takes the GET tasks and puts them on the base page
     }                           //displays the title
 
 	

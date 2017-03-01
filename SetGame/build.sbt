@@ -1,4 +1,4 @@
-name := """SetGame"""
+name := "Button"
 
 version := "1.0-SNAPSHOT"
 
@@ -15,6 +15,5 @@ libraryDependencies ++= Seq(
   "org.hibernate" % "hibernate-entitymanager" % "4.3.8.Final",
   javaJdbc,
   cache,
-  javaEbean,
   javaWs
 )
