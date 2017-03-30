@@ -1,28 +1,39 @@
 package controllers;
-
-import play.*;
-import play.db.jpa.Transactional;
-import play.mvc.*;
+ 
 import models.Task;
-import views.html.*;
-
+import services.TaskPersistenceService;
+import services.TaskPersistenceServiceImpl;
+import play.data.Form;
+import play.db.jpa.Transactional;
+import play.mvc.Controller;
+import play.mvc.Result;
+import java.util.List;
+import views.html.index;
+ 
 public class Application extends Controller {
-
-	@Transactional
-    public static Result index() {
-        return ok(index.render("Pink Bunny Slippers", play.data.Form.form(models.Task.class)));   //takes the GET tasks and puts them on the base page
-    }                           //displays the title
-
 	
+	private static final TaskPersistenceService taskPersist = new TaskPersistenceServiceImpl();
+ 
+    public static Result index() {
+       return ok(index.render("hello, world", Form.form(Task.class)));
+    }
+ 
+    @Transactional
     public static Result addTask() {
-    	play.data.Form<models.Task> form = play.data.Form.form(models.Task.class).bindFromRequest();   //adds a form to the base page to create data
-    	models.Task task = form.get();
-    	task.save();                   //Saves the data until SBT shuts down
-    	return redirect(routes.Application.index());
-    }
-    
-    public static Result getTasks() {
-    	java.util.List<models.Task> tasks = new play.db.ebean.Model.Finder(String.class, models.Task.class).all();
-    	return ok(play.libs.Json.toJson(tasks));   //Returns the data as raw data to be translated by javascript
-    }
-}
+        Form<Task> form = Form.form(Task.class).bindFromRequest();
+        if (form.hasErrors()) {
+        	return badRequest(index.render("hello, world", form));
+        }
+
+
+        Task task = form.get();
+        taskPersist.saveTask(task);
+        return redirect(routes.Application.index());
+     }
+ 
+    @Transactional
+     public static Result getTasks() {
+    	List<Task> tasks = taskPersist.fetchAllTasks();
+        return ok(play.libs.Json.toJson(tasks));
+     }
+ }

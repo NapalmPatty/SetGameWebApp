@@ -13,7 +13,7 @@ libraryDependencies += "org.webjars" % "bootstrap" % "2.1.1"
 libraryDependencies ++= Seq(
   javaJpa.exclude("org.hibernate.javax.persistence", "hibernate-jpa-2.0-api"),
   "org.hibernate" % "hibernate-entitymanager" % "4.3.8.Final",
+  "mysql" % "mysql-connector-java" % "5.1.40",
   javaJdbc,
   cache,
-  javaWs
 )
