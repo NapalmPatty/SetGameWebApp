@@ -1,37 +1,39 @@
 package controllers;
  
-import models.Task;
+import jpa.Task;
+import jpa.TaskForm;
 import services.TaskPersistenceService;
-import services.TaskPersistenceServiceImpl;
 import play.data.Form;
-import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 import java.util.List;
 import views.html.index;
- 
+import javax.inject.Inject;
+import javax.inject.Named;
+
+@Named
 public class Application extends Controller {
 	
-	private static final TaskPersistenceService taskPersist = new TaskPersistenceServiceImpl();
+	@Inject
+	private TaskPersistenceService taskPersist;
  
-    public static Result index() {
-       return ok(index.render("hello, world", Form.form(Task.class)));
+    public Result index() {
+       return ok(index.render("hello, world", Form.form(TaskForm.class)));
     }
  
-    @Transactional
-    public static Result addTask() {
-        Form<Task> form = Form.form(Task.class).bindFromRequest();
+    public Result addTask() {
+        Form<TaskForm> form = Form.form(TaskForm.class).bindFromRequest();
         if (form.hasErrors()) {
         	return badRequest(index.render("hello, world", form));
         }
 
 
-        Task task = form.get();
+        Task task = new Task();
+        task.setContents(form.get().getContents());
         taskPersist.saveTask(task);
         return redirect(routes.Application.index());
      }
  
-    @Transactional
      public static Result getTasks() {
     	List<Task> tasks = taskPersist.fetchAllTasks();
         return ok(play.libs.Json.toJson(tasks));

@@ -1,5 +1,8 @@
-/ApplicationTest.class
-/IntegrationTest.class
+/play/
+/Global.class
+/configs/
 /controllers/
-/models/
 /services/
+/models/
+/jpa/
+/views/
