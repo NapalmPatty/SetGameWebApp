@@ -1,8 +1,4 @@
-/play/
-/Global.class
-/configs/
-/controllers/
-/services/
-/models/
 /jpa/
-/views/
+/services/
+/configs/
+/docker/
