@@ -1,3 +1,10 @@
+head {
+	background-color: orange;
+	color: gray;
+}
+
 body {
+	background-color: black;
+    color: red;
     padding-top: 50px;
 }

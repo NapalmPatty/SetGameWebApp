@@ -3,9 +3,14 @@
 # ~~~~
 
 # Home page
+
 GET     /                           @controllers.Application.index()
 POST    /task                       @controllers.Application.addTask()
 GET     /tasks                      @controllers.Application.getTasks()
+
+#GET     /page1                      @controllers.Application.index1()
+#POST    /page2                      @controllers.Application.addTask1()
+#GET     /page3                      @controllers.Application.getTasks1()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

@@ -1,0 +1,25 @@
+@*
+@(message: String, taskForm: Form[TaskForm])
+@implicitFieldConstructor = @{ helper.FieldConstructor(twitterBootstrapInput.render) }
+
+@main("Welcome to NewPlay") {
+
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container-fluid">
+                <a id="titleLink" class="brand" href="/">@message.toUpperCase</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        @helper.form(action = routes.Application.addTask1(), 'class -> "well form-horizontal") {
+            @helper.inputText(taskForm("contents1"), '_label -> "Contentious with working")
+            <div style="float: right;" class="controls">
+                <input type="submit" class="btn btn-primary"/>
+            </div>
+        }
+    </div>
+    <ul style="text-align:right; list-style-type:disc" id="tasks"></ul>
+}
+*@

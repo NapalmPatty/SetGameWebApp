@@ -28,4 +28,18 @@ public class TaskPersistenceServiceImpl implements TaskPersistenceService {
     public List<Task> fetchAllTasks() {
         return em.createQuery("from Task", Task.class).getResultList();
     }
+    /*
+    @Override
+    public void saveTask1(Task page2) {
+        if (page2.getContents() == null) {
+            throw new IllegalArgumentException("Contents must not be blanket");
+        }
+        em.persist(page2);
+    }
+    
+    @Override
+    public List<Task> fetchAllTasks1() {
+        return em.createQuery("from Task", Task.class).getResultList();
+    }
+    */
 }
