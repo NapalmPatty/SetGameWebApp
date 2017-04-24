@@ -4,11 +4,10 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-
 import configs.AppConfig;
 import configs.TestDataConfig;
-
 import jpa.Task;
+
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.AbstractTransactionalJUnit4SpringContextTests;
@@ -17,10 +16,12 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.persistence.PersistenceException;
+import javax.validation.ValidationException;
 
 @ContextConfiguration(classes = {AppConfig.class, TestDataConfig.class})
 public class TaskPersistenceServiceTest extends AbstractTransactionalJUnit4SpringContextTests {
-    @Inject
+    
+	@Inject
     private TaskPersistenceService taskPersist;
 
     @Test
@@ -52,6 +53,28 @@ public class TaskPersistenceServiceTest extends AbstractTransactionalJUnit4Sprin
         }
     }
 
+    @Test
+    public void enterOneOrLessCharactersTest() {
+    	try {
+    		final Task t = new Task();
+            t.setContents("x");
+            taskPersist.saveTask(t);
+            fail("Task is below required characters, it should fail.");
+    	} catch (ValidationException ignored) {	
+    	}
+    }
+    
+    @Test
+    public void enterTwelveCharactersTest() {
+    	try {
+    		final Task t = new Task();
+            t.setContents("xxxxxxxxxxxx");
+            taskPersist.saveTask(t);
+            fail("Task is above required characters, it should fail.");
+    	} catch (ValidationException ignored) {	
+    	}
+    }
+    
     @Test
     public void saveNonBlankIdTaskTest() {
         try {

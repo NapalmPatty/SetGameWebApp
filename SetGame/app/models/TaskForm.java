@@ -1,10 +1,16 @@
 package models;
 
 import play.data.validation.Constraints.Required;
+import play.data.validation.Constraints.MaxLength;
+import play.data.validation.Constraints.MinLength;
+import play.data.validation.Constraints.Pattern;
 
 public class TaskForm {
 
     @Required
+    @MaxLength(value = 11)
+    @MinLength(value = 2) 
+    @Pattern("[\\S]+")
     private String contents;
 
     public String getContents() {

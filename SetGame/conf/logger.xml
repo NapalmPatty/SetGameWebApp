@@ -2,8 +2,18 @@
 
   <appender name="FILE" class="ch.qos.logback.core.FileAppender">
     <file>${application.home}/logs/application.log</file>
+    
+    <!-- Got this part from playframework.com -->
+    
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- Daily rollover with compression -->
+            <fileNamePattern>application-log-%d{yyyy-MM-dd}.txt</fileNamePattern>
+            <!-- keep 30 days worth of history -->
+            <maxHistory>30</maxHistory>
+    </rollingPolicy>
+    
     <encoder>
-      <pattern>%date - [%level] - from %logger in %thread%n%message%n%xException%n</pattern>
+      <pattern>%date{yyyy-MM-dd HH:mm:ss} - [%level] - from %logger in %thread%n%message%n%xException%n</pattern>
     </encoder>
   </appender>
 
@@ -12,13 +22,22 @@
       <pattern>%date - [%level] - from %logger in %thread%n%message%n%xException%n</pattern>
     </encoder>
   </appender>
+  
+  <appender name="TASKFORM" class="${application.home}.app.models.TaskForm">
+    <file>${application.home}/logs/TaskForm.log</file>
+    <encoder>
+      <pattern>%date - {%level} - from %logger in %thread%n%message%n%xException%n</pattern>
+    </encoder>
+  </appender>
 
   <logger name="play" level="INFO" />
   <logger name="controllers" level="INFO" />
+  <logger name="file" level="INFO">
+    <appender-ref ref="FILE"/>
+  </logger>
 
   <root level="WARN">
     <appender-ref ref="STDOUT" />
-    <appender-ref ref="FILE" />
   </root>
 
 </configuration>
