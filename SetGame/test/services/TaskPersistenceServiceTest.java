@@ -31,6 +31,27 @@ public class TaskPersistenceServiceTest extends AbstractTransactionalJUnit4Sprin
     }
 
     @Test
+    public void fetchIfSingleTask() {
+    	final Task t = new Task();
+        t.setContents("contents");
+        taskPersist.saveTask(t);
+        final List<Task> list = taskPersist.fetchAllTasks();
+        assertTrue("List should have one element", list.size() == 1);
+    }
+    
+    @Test
+    public void fetchIfMultipleTasks() {
+    	final Task t = new Task();
+        final Task f = new Task();
+        t.setContents("contents");
+        f.setContents("content");
+        taskPersist.saveTask(t);
+        taskPersist.saveTask(f);
+        final List<Task> list = taskPersist.fetchAllTasks();
+        assertTrue("List should have two element", list.size() == 2);
+    }
+    
+    @Test
     public void saveValidTaskTest() {
         assertTrue("List should be empty", taskPersist.fetchAllTasks().isEmpty());
 
@@ -83,7 +104,7 @@ public class TaskPersistenceServiceTest extends AbstractTransactionalJUnit4Sprin
             t.setId(1L);
             taskPersist.saveTask(t);
             fail("This should have failed since id is not blank");
-        } catch (PersistenceException ignored) {
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
@@ -96,8 +117,12 @@ public class TaskPersistenceServiceTest extends AbstractTransactionalJUnit4Sprin
         final List<Task> list = taskPersist.fetchAllTasks();
         assertTrue("List should have one element", list.size() == 1);
 
-        // Attempt to save the same task again, should fail?
-        // taskPersist.saveTask(t);
-        // fail("We shouldn't be able to resave the same item");
+        // Attempt to save the same task again, should fail.
+        try {
+        taskPersist.saveTask(t);
+        fail("We shouldn't be able to resave the same item");
+        } 
+        catch (IllegalArgumentException ignored) {	
+        }
     }
 }

@@ -10,14 +10,19 @@ import play.mvc.Result;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Named
 public class Application extends Controller {
 
+	private static final Logger applogger = LoggerFactory.getLogger(Application.class);
+	
     @Inject
     private TaskPersistenceService taskPersist;
 
     public Result index() {
+    	applogger.info("Shaved Brown Fox Moccasins");
         return ok(index.render("Fuzzy Pink Bunny Slippers", Form.form(TaskForm.class)));
     }
     

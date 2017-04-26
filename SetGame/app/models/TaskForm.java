@@ -10,7 +10,7 @@ public class TaskForm {
     @Required
     @MaxLength(value = 11)
     @MinLength(value = 2) 
-    @Pattern("[\\S]+")
+    @Pattern(value = "[\\S]+", message = "Your input must have no white space.")
     private String contents;
 
     public String getContents() {
