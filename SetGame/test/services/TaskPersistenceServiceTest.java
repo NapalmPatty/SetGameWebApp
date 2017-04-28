@@ -48,7 +48,7 @@ public class TaskPersistenceServiceTest extends AbstractTransactionalJUnit4Sprin
         taskPersist.saveTask(t);
         taskPersist.saveTask(f);
         final List<Task> list = taskPersist.fetchAllTasks();
-        assertTrue("List should have two element", list.size() == 2);
+        assertTrue("List should have two elements", list.size() == 2);
     }
     
     @Test
@@ -73,9 +73,29 @@ public class TaskPersistenceServiceTest extends AbstractTransactionalJUnit4Sprin
         } catch (IllegalArgumentException ignored) {
         }
     }
+    
+    @Test
+    public void saveNullTaskTest() {
+        try {
+            taskPersist.saveTask(null);
+            fail("This should have failed since Task is null.");
+        } catch (IllegalArgumentException ignored) {
+        }
+    }
+    
+    @Test
+    public void saveEmptyContentsTest() {
+        try {
+            final Task t = new Task();
+            t.setContents("");
+            taskPersist.saveTask(t);
+            fail("This should have failed since contents are empty.");
+        } catch (ValidationException ignored) {
+        }
+    }
 
     @Test
-    public void enterOneOrLessCharactersTest() {
+    public void enterTooFewCharactersTest() {
     	try {
     		final Task t = new Task();
             t.setContents("x");
@@ -86,7 +106,7 @@ public class TaskPersistenceServiceTest extends AbstractTransactionalJUnit4Sprin
     }
     
     @Test
-    public void enterTwelveCharactersTest() {
+    public void enterTooManyCharactersTest() {
     	try {
     		final Task t = new Task();
             t.setContents("xxxxxxxxxxxx");
@@ -119,10 +139,9 @@ public class TaskPersistenceServiceTest extends AbstractTransactionalJUnit4Sprin
 
         // Attempt to save the same task again, should fail.
         try {
-        taskPersist.saveTask(t);
-        fail("We shouldn't be able to resave the same item");
-        } 
-        catch (IllegalArgumentException ignored) {	
+            taskPersist.saveTask(t);
+            fail("We shouldn't be able to resave the same item");
+        } catch (IllegalArgumentException ignored) {	
         }
     }
 }

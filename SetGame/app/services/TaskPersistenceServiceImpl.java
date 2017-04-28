@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
 import javax.validation.ValidationException;
-//import javax.inject.Inject;
+
 
 @Named
 public class TaskPersistenceServiceImpl implements TaskPersistenceService {
@@ -20,6 +20,9 @@ public class TaskPersistenceServiceImpl implements TaskPersistenceService {
     @Transactional
     @Override
     public void saveTask(Task task) {
+    	if (task == null) {
+    		throw new IllegalArgumentException("The task is null.");
+    	}
         if (task.getContents() == null) {
             throw new IllegalArgumentException("Contents must not be blank");
         }
