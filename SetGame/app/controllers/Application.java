@@ -42,25 +42,4 @@ public class Application extends Controller {
         List<Task> tasks = taskPersist.fetchAllTasks();
         return ok(play.libs.Json.toJson(tasks));
     }
-    
-    /*
-    public Result index1() {
-        return ok(index.render("Totally not stolen from Nate but was copypasted and now it somehow works Jesus Christ Nate I don't fucking know", Form.form(TaskForm.class)));
-    }
-    public Result addTask1() {
-        Form<TaskForm> page2form = Form.form(TaskForm.class).bindFromRequest();
-        if (page2form.hasErrors()) {
-            return badRequest(index.render("Totally not stolen from Nateeeee", page2form));
-        }
-
-        Task page2 = new Task();
-        page2.setContents(page2form.get().getContents1());
-        taskPersist.saveTask(page2);
-        return redirect(routes.Application.index());
-    }
-    public Result getTasks1() {
-        List<Task> page3 = taskPersist.fetchAllTasks();
-        return ok(play.libs.Json.toJson(page3));
-    }
-    */
 }
